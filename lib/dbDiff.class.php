@@ -107,7 +107,7 @@ class dbDiff
   {
     foreach ($tables as $table)
     {
-      $query = "DESCRIBE `{$table}`";
+      $query = "SHOW FULL COLUMNS FROM `{$table}`";
       $table_current_columns = $this->getColumnList($this->current->query($query));
       $table_published_columns = $this->getColumnList($this->published->query($query));
       $this->createDifferenceInsideTable($table, $table_current_columns, $table_published_columns);
@@ -189,6 +189,11 @@ class dbDiff
       }
     
       $sql .= " DEFAULT $default";
+    }
+    if (!empty($column['Comment']))
+    {
+      $comment = "'" . $column['Comment'] . "'";
+      $sql .= " COMMENT $comment";
     }
   }
   

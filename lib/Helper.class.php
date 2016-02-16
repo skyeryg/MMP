@@ -25,6 +25,7 @@ class Helper
     'user' => null,
     'password' => null,
     'db' => null,
+    'charset' => 'utf8',
     'savedir' => null,
     'verbose' => null,
     'versiontable' => null,
@@ -133,13 +134,12 @@ class Helper
         $conf[$option] = $value;
       }
     }
-    else
-    {
-      if($db) return $db;
-      $db = new Mysqli($conf['host'],$conf['user'],$conf['password'],$conf['db']);
-      return $db;
+    if($db) return $db;
+    $db = new Mysqli($conf['host'],$conf['user'],$conf['password'],$conf['db']);
+    if ($conf['charset']) {
+      $db->set_charset($conf['charset']);
     }
-    return new Mysqli($conf['host'],$conf['user'],$conf['password'],$conf['db']);
+    return $db;
   }
 
   static function initDirForSavedMigrations()

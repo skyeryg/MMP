@@ -2,6 +2,7 @@ host=localhost
 user=root
 password=
 db=mmpi_test
+charset=utf8
 savedir=db
 verbose=On
 versiontable=db_revisions
